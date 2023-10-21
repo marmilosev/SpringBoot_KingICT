@@ -1,11 +1,6 @@
 package hr.kingict.springbootakademija2023.service;
 
-import org.springframework.stereotype.Service;
+public interface DashboardService {
 
-@Service
-public class DashboardService {
-
-    public String getDashboard(){
-        return "dashboard.html";
-    }
+    public String getDashboard();
 }
