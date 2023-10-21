@@ -1,6 +1,5 @@
 package hr.kingict.springbootakademija2023.aop;
 
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
