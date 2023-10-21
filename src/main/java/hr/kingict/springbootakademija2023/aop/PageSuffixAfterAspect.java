@@ -14,7 +14,7 @@ public class PageSuffixAfterAspect {
     Logger logger = LoggerFactory.getLogger(PageSuffixAfterAspect.class);
     @AfterReturning(value = "execution(* hr.kingict.springbootakademija2023.service.PageSuffixService.getSuffix())",
             returning = "result")
-    private void afterPageSuffixServiceGetSuffix(JoinPoint joinPoint, String result){
+    private void afterPageSuffixServiceGetSuffix(String result){
         logger.info("afterPageSuffixServiceGetSuffix : " + result);
     }
 }
