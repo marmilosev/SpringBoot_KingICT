@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import util.FilenameUtil;
 
 @Controller
 public class DashboardController {
@@ -15,10 +16,12 @@ public class DashboardController {
     @Autowired
     @Qualifier(value = "html")
     private PageSuffixService pageSuffixService;
+    @Autowired
+    private FilenameUtil filenameUtil;
 
 //    @RequestMapping(method = RequestMethod.GET, value = "/dashboard")
     @GetMapping(value = "/dashboard")
     public String getDashboard(){
-        return dashboardService.getDashboard() + "." + pageSuffixService.getSuffix();
+        return dashboardService.getDashboard() + filenameUtil.getSuffixSeparator() + pageSuffixService.getSuffix();
     }
 }
