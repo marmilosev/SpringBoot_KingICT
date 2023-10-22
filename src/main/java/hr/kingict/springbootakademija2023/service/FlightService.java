@@ -7,7 +7,9 @@ import com.amadeus.resources.Location;
 import com.amadeus.Params;
 import com.amadeus.referencedata.Locations;
 import hr.kingict.springbootakademija2023.entity.FlightSearchEntity;
+import hr.kingict.springbootakademija2023.mapper.FlightOfferSearchFlightSearchResultEntityMapper;
 import hr.kingict.springbootakademija2023.repository.FlightSearchRepository;
+import hr.kingict.springbootakademija2023.repository.FlightSearchResultRepository;
 import jakarta.transaction.Transactional;
 import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
@@ -26,6 +28,10 @@ public class FlightService {
     private Amadeus amadeus;
     @Autowired
     private FlightSearchRepository flightSearchRepository;
+    @Autowired
+    private FlightSearchResultRepository flightSearchResultRepository;
+
+    private FlightOfferSearchFlightSearchResultEntityMapper flightSearchResultEntityMapper;
 
     Logger logger = LoggerFactory.getLogger(FlightService.class);
     public List<Location> getAirports(String keyword){
@@ -47,8 +53,8 @@ public class FlightService {
 
         List<FlightSearchEntity> byFlight = flightSearchRepository.findByFlight(originLocationCode, destinationLocationCode, departureDate, returnDate, adults);
 
+        FlightSearchEntity flightSearchEntity = new FlightSearchEntity();
         if(byFlight == null || byFlight.isEmpty()) {
-            FlightSearchEntity flightSearchEntity = new FlightSearchEntity();
             flightSearchEntity.setOriginLocationCode(originLocationCode);
             flightSearchEntity.setDestinationLocationCode(destinationLocationCode);
             flightSearchEntity.setDepartureDate(departureDate);
@@ -72,6 +78,13 @@ public class FlightService {
 
         try {
             FlightOfferSearch[] flightOfferSearches = amadeus.shopping.flightOffersSearch.get(params);
+            Arrays.asList(flightOfferSearches)
+                    .stream()
+                    .map(flightOfferSearch -> flightSearchResultEntityMapper.map(flightOfferSearch))
+                    .forEach(flightSearchResultEntity ->{
+                        flightSearchResultEntity.setFlightSearchEntity(flightSearchEntity);
+                        flightSearchResultRepository.save(flightSearchResultEntity);
+                    });
             return Arrays.asList(flightOfferSearches);
         } catch (Exception e) {
             logger.error("getFlights error : " + e.getMessage(), e);

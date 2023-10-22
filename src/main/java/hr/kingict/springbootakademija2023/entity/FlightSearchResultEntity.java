@@ -3,28 +3,25 @@ package hr.kingict.springbootakademija2023.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "pretraga_letova")
-public class FlightSearchEntity {
+@Table(name = "rezultati_letova")
+public class FlightSearchResultEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
-    @Column(name = "polazni_aerodrom")
-    private String originLocationCode;
-    @Column(name = "dolazni_aerodrom")
-    private String destinationLocationCode;
-    @Column(name = "datum_polaska")
-    private LocalDate departureDate;
-    @Column(name = "datum_povratka")
-    private LocalDate returnDate;
-    @Column(name = "broj_putnika")
-    private Integer adults;
-    @OneToMany
-    private List<FlightSearchResultEntity> flightSearchResultEntityList;
+    @Column(name = "cijena")
+    private String price;
+    @Column(name = "odlazna_aviokompanija")
+    private String outboundCarrier;
+    @Column(name = "povratna_aviokompanija")
+    private String inboundCarrier;
+    @ManyToOne
+    @JoinColumn(name = "pretraga_id")
+    private FlightSearchEntity flightSearchEntity;
     @Column(name = "korisnik_kreiranja")
     private String userCreated;
     @Column(name = "datum_kreiranja")
@@ -38,7 +35,7 @@ public class FlightSearchEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FlightSearchEntity that = (FlightSearchEntity) o;
+        FlightSearchResultEntity that = (FlightSearchResultEntity) o;
         return Objects.equals(id, that.id);
     }
 
@@ -55,44 +52,36 @@ public class FlightSearchEntity {
         this.id = id;
     }
 
-    public String getOriginLocationCode() {
-        return originLocationCode;
+    public String getPrice() {
+        return price;
     }
 
-    public void setOriginLocationCode(String originLocationCode) {
-        this.originLocationCode = originLocationCode;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getDestinationLocationCode() {
-        return destinationLocationCode;
+    public String getOutboundCarrier() {
+        return outboundCarrier;
     }
 
-    public void setDestinationLocationCode(String destinationLocationCode) {
-        this.destinationLocationCode = destinationLocationCode;
+    public void setOutboundCarrier(String outboundCarrier) {
+        this.outboundCarrier = outboundCarrier;
     }
 
-    public LocalDate getDepartureDate() {
-        return departureDate;
+    public String getInboundCarrier() {
+        return inboundCarrier;
     }
 
-    public void setDepartureDate(LocalDate departureDate) {
-        this.departureDate = departureDate;
+    public void setInboundCarrier(String inboundCarrier) {
+        this.inboundCarrier = inboundCarrier;
     }
 
-    public LocalDate getReturnDate() {
-        return returnDate;
+    public FlightSearchEntity getFlightSearchEntity() {
+        return flightSearchEntity;
     }
 
-    public void setReturnDate(LocalDate returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public Integer getAdults() {
-        return adults;
-    }
-
-    public void setAdults(Integer adults) {
-        this.adults = adults;
+    public void setFlightSearchEntity(FlightSearchEntity flightSearchEntity) {
+        this.flightSearchEntity = flightSearchEntity;
     }
 
     public String getUserCreated() {

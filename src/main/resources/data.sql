@@ -22,3 +22,19 @@ create table pretraga_letova
     korisnik_azuriranja varchar(50),
     datum_azuriranja date
 );
+
+create table rezultati_letova(
+    id int primary key auto_increment,
+    cijena varchar(20),
+    odlazna_aviokompanija varchar(10),
+    povratna_aviokompanija varchar(10),
+
+    pretraga_id int,
+
+    korisnik_kreiranja varchar(50),
+    datum_kreiranja date,
+    korisnik_azuriranja varchar(50),
+    datum_azuriranja date
+);
+
+alter table rezultati_letova add foreign key (pretraga_id) references pretraga_letova(id);
