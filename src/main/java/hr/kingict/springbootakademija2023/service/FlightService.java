@@ -6,6 +6,9 @@ import com.amadeus.resources.FlightOfferSearch;
 import com.amadeus.resources.Location;
 import com.amadeus.Params;
 import com.amadeus.referencedata.Locations;
+import hr.kingict.springbootakademija2023.entity.FlightSearchEntity;
+import hr.kingict.springbootakademija2023.repository.FlightSearchRepository;
+import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ import java.util.List;
 public class FlightService {
     @Autowired
     private Amadeus amadeus;
+    @Autowired
+    private FlightSearchRepository flightSearchRepository;
+
     Logger logger = LoggerFactory.getLogger(FlightService.class);
     public List<Location> getAirports(String keyword){
         Params params = Params
@@ -36,6 +42,18 @@ public class FlightService {
     }
 
     public List<FlightOfferSearch> getFlights(String originLocationCode, String destinationLocationCode, LocalDate departureDate, LocalDate returnDate, Integer adults){
+        FlightSearchEntity flightSearchEntity = new FlightSearchEntity();
+        flightSearchEntity.setOriginLocationCode(originLocationCode);
+        flightSearchEntity.setDestinationLocationCode(destinationLocationCode);
+        flightSearchEntity.setDepartureDate(departureDate);
+        flightSearchEntity.setReturnDate(returnDate);
+        flightSearchEntity.setAdults(adults);
+
+        flightSearchEntity.setUserCreated("Marija");
+        flightSearchEntity.setDateCreated(LocalDate.now());
+
+        flightSearchRepository.save(flightSearchEntity);
+
         Params params = Params
                 .with("originLocationCode", originLocationCode)
                 .and("destinationLocationCode", destinationLocationCode)
