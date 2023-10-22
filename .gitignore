@@ -31,3 +31,5 @@ build/
 
 ### VS Code ###
 .vscode/
+
+src/main/java/hr/kingict/springbootakademija2023/config/AmadeusConfig.java
