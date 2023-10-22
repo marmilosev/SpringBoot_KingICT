@@ -8,6 +8,7 @@ import com.amadeus.Params;
 import com.amadeus.referencedata.Locations;
 import hr.kingict.springbootakademija2023.entity.FlightSearchEntity;
 import hr.kingict.springbootakademija2023.repository.FlightSearchRepository;
+import jakarta.transaction.Transactional;
 import org.hibernate.cfg.Environment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,7 @@ public class FlightService {
         }
     }
 
+    @Transactional //metoda koja pretražuje u bazi i radi nešto s time
     public List<FlightOfferSearch> getFlights(String originLocationCode, String destinationLocationCode, LocalDate departureDate, LocalDate returnDate, Integer adults){
 
         List<FlightSearchEntity> byFlight = flightSearchRepository.findByFlight(originLocationCode, destinationLocationCode, departureDate, returnDate, adults);
