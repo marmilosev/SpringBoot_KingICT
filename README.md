@@ -2,6 +2,7 @@
 
 config -- AmadeusConfig.java looks like:
 
+```
 @Configuration
 public class AmadeusConfig {
     @Bean
@@ -11,3 +12,4 @@ public class AmadeusConfig {
                 .build();
     }
 }
+```
