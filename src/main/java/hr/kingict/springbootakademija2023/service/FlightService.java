@@ -42,17 +42,22 @@ public class FlightService {
     }
 
     public List<FlightOfferSearch> getFlights(String originLocationCode, String destinationLocationCode, LocalDate departureDate, LocalDate returnDate, Integer adults){
-        FlightSearchEntity flightSearchEntity = new FlightSearchEntity();
-        flightSearchEntity.setOriginLocationCode(originLocationCode);
-        flightSearchEntity.setDestinationLocationCode(destinationLocationCode);
-        flightSearchEntity.setDepartureDate(departureDate);
-        flightSearchEntity.setReturnDate(returnDate);
-        flightSearchEntity.setAdults(adults);
 
-        flightSearchEntity.setUserCreated("Marija");
-        flightSearchEntity.setDateCreated(LocalDate.now());
+        List<FlightSearchEntity> byFlight = flightSearchRepository.findByFlight(originLocationCode, destinationLocationCode, departureDate, returnDate, adults);
 
-        flightSearchRepository.save(flightSearchEntity);
+        if(byFlight == null || byFlight.isEmpty()) {
+            FlightSearchEntity flightSearchEntity = new FlightSearchEntity();
+            flightSearchEntity.setOriginLocationCode(originLocationCode);
+            flightSearchEntity.setDestinationLocationCode(destinationLocationCode);
+            flightSearchEntity.setDepartureDate(departureDate);
+            flightSearchEntity.setReturnDate(returnDate);
+            flightSearchEntity.setAdults(adults);
+
+            flightSearchEntity.setUserCreated("Marija");
+            flightSearchEntity.setDateCreated(LocalDate.now());
+
+            flightSearchRepository.save(flightSearchEntity);
+        }
 
         Params params = Params
                 .with("originLocationCode", originLocationCode)
