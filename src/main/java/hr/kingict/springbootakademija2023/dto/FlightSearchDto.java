@@ -7,15 +7,16 @@ public class FlightSearchDto {
     private String outboundDepartureDate;
     private String outboundArrivalAirport;
     private String outboundArrivalDate;
+    private String outboundCarrier;
 
     //inbound data
     private String inboundDepartureAirport;
     private String inboundDepartureDate;
     private String inboundArrivalAirport;
     private String inboundArrivalDate;
+    private String inboundCarrier;
 
     private String price;
-    private String carrier;
 
     public String getOutboundDepartureAirport() {
         return outboundDepartureAirport;
@@ -89,11 +90,19 @@ public class FlightSearchDto {
         this.price = price;
     }
 
-    public String getCarrier() {
-        return carrier;
+    public String getOutboundCarrier() {
+        return outboundCarrier;
     }
 
-    public void setCarrier(String carrier) {
-        this.carrier = carrier;
+    public void setOutboundCarrier(String outboundCarrier) {
+        this.outboundCarrier = outboundCarrier;
+    }
+
+    public String getInboundCarrier() {
+        return inboundCarrier;
+    }
+
+    public void setInboundCarrier(String inboundCarrier) {
+        this.inboundCarrier = inboundCarrier;
     }
 }
